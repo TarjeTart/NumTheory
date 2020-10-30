@@ -19,32 +19,28 @@ public class NumTheory {
 		return b;
 	}
 	
-	public static List<Integer> extendedEuc(int a, int b) {
-		//make sure a>b
-		if(b>a) {
-			int tmp = a;
-			a = b;
-			b = tmp;
-		}
-		//create a list of all euc alg steps
-		List<Integer> nums = new ArrayList<Integer>();
-		int r = a%b;
-		nums.add(a);
-		nums.add(a/b);
-		nums.add(b);
-		nums.add(r);
-		while(r!=0) {
-			a=b;
-			b=r;
-			r=a%b;
-			nums.add(a);
-			nums.add(a/b);
-			nums.add(b);
-			nums.add(r);
-		}
-		//use list to go backwards
-		return nums;
-	}
+	//extended euc alg
+	public static int[] extendedEuc(int a, int b){
+        int x = 0, y = 1, lastx = 1, lasty = 0, temp;
+        while (b != 0)
+        {
+            int q = a / b;
+            int r = a % b;
+ 
+            a = b;
+            b = r;
+ 
+            temp = x;
+            x = lastx - q * x;
+            lastx = temp;
+ 
+            temp = y;
+            y = lasty - q * y;
+            lasty = temp;            
+        }
+        int[] tmp = {lastx,lasty};
+        return tmp;
+    } 
 	
 	//modular arithmetic with exponents
 	public static String exponentMods(int base,int power,int mod) {
