@@ -43,17 +43,17 @@ public class NumTheory {
     } 
 	
 	//modular arithmetic with exponents
-	public static String exponentMods(int base,int power,int mod) {
+	public static int exponentMods(int base,int power,int mod) {
 		BigInteger result = BigInteger.valueOf(base);
 		for(int i = 0; i < power-1;i++)
 			result = result.multiply(BigInteger.valueOf(base));
-		return base + " to the power of " + power + " mod " + mod + " is " + result.mod(BigInteger.valueOf(mod)).toString();
+		return Integer.valueOf(result.mod(BigInteger.valueOf(mod)).toString());
 	}
 	
 	//large mods
-	public static String largeMods(int base,int mod) {
+	public static int largeMods(int base,int mod) {
 		BigInteger result = BigInteger.valueOf(base);
-		return base + " mod " + mod + " is " + result.mod(BigInteger.valueOf(mod)).toString();
+		return Integer.valueOf(result.mod(BigInteger.valueOf(mod)).toString());
 	}
 	
 	//list of primes up to or equal to n
@@ -138,6 +138,26 @@ public class NumTheory {
 			toReturn*=(i[1]+1);
 		}
 		return toReturn;
+	}
+	
+	//returns sum of positive divisors of n
+	public static int sigma(int n) {
+		//get prime fac decomp
+		int[][] decomp = primeFac(n);
+		//init return val
+		int result = 1;
+		//go over all decomps
+		for(int i = 0; i < decomp.length;i++) {
+			//get the value of base
+			int base = decomp[i][0];
+			int tmp = 0;
+			//sum over powers 0-decomp[i][1]
+			for(int j = 0; j <= decomp[i][1];j++) {
+				tmp+=(int)Math.pow(base, j);
+			}
+			result*=tmp;
+		}
+		return result;
 	}
 	
 	//add 1 to power if exist or add base if not
