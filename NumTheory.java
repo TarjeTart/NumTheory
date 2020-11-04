@@ -5,6 +5,8 @@ import java.util.List;
 
 public class NumTheory {
 	
+	private static int x,y;
+	
 	private NumTheory(){};
 
 	//gcd by euclidean algorithm
@@ -21,7 +23,7 @@ public class NumTheory {
 	
 	//extended euc alg
 	public static int[] extendedEuc(int a, int b){
-        int x = 0, y = 1, lastx = 1, lasty = 0, temp;
+		int x = 0, y = 1, lastx = 1, lasty = 0, temp;
         while (b != 0)
         {
             int q = a / b;
@@ -158,6 +160,50 @@ public class NumTheory {
 			result*=tmp;
 		}
 		return result;
+	}
+	
+	//extended gcd for solving a linear diophantine eqn
+	private static int gcd_extend(int a, int b){ 	
+		// Base Case 
+	    if (b == 0){ 
+	        x = 1; 
+	        y = 0; 
+	        return a; 
+	    } 
+	    // Recursively find the gcd 
+	    else{ 
+	        int g = gcd_extend(b, a % b); 
+	        int x1 = x, y1 = y; 
+	        x = y1; 
+	        y = x1 - (a / b) * y1; 
+	        return g; 
+	    } 
+	} 
+	  
+	// Function to print the solutions of 
+	// the given equations ax + by = c 
+	public static int[] diophantine(int a, int b, int c){ 
+	    if (a == 0 && b == 0){ 
+	          
+	        // Condition for infinite solutions 
+	        if (c == 0){ 
+	            return null;
+	        }// Condition for no solutions exist 
+	        else{ 
+	            return null; 
+	        } 
+	    } 
+	    int gcd = gcd_extend(a, b); 
+	  
+	    // Condition for no solutions exist 
+	    if (c % gcd != 0){ 
+	        return null; 
+	    }else{ 
+	          
+	        // Print the solution 
+	        int[] result = {x * (c / gcd),y * (c / gcd)}; 
+	        return result;
+	    } 
 	}
 	
 	//add 1 to power if exist or add base if not
