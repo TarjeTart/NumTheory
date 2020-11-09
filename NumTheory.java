@@ -206,6 +206,16 @@ public class NumTheory {
 	    } 
 	}
 	
+	//find number of positive integers relatively prime to n
+	public static int phi(int n) {
+		int[][] decomp = primeFac(n);
+		double result = n;
+		for(int[] i:decomp) {
+			result*=(1-(1.0/i[0]));
+		}
+		return (int)result;
+	}
+	
 	//add 1 to power if exist or add base if not
 	private static List<int[]> addNum(int j,List<int[]> list) {
 		boolean existed = false;
